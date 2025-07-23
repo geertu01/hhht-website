@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索魅力呼和浩特：定制您的专属之旅</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0fdf4; /* Light mint green background (Tailwind green-50) */
+            color: #333;
+        }
+        /* Custom styles for the active tab/button for car selection */
+        .car-select-btn.active {
+            background-color: #10b981; /* Tailwind green-600 */
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        /* Custom Swiper pagination dots */
+        .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+        }
+        .swiper-pagination-bullet-active {
+            background: #10b981; /* Tailwind green-600 */
+        }
+        /* Swiper navigation arrows */
+        .swiper-button-next, .swiper-button-prev {
+            color: white !important; /* Force white color */
+            --swiper-navigation-size: 30px; /* Adjust size */
+            transition: transform 0.2s ease;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            transform: scale(1.1);
+        }
+
+        /* 套餐卡片悬停效果 */
+        .package-card-hover:hover {
+            border-color: #10b981; /* 边框颜色变为绿色 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+        }
+
+        /* 微信二维码容器样式 */
+        .wechat-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .wechat-contact img {
+            width: 120px; /* 调整二维码大小 */
+            height: 120px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd; /* 给二维码加个边框 */
+            border-radius: 8px; /* 轻微圆角 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-16 text-center shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-5xl font-extrabold mb-4 animate__animated animate__fadeInDown">探索魅力呼和浩特：定制您的专属之旅</h1>
+            <p class="text-xl font-light max-w-2xl mx-auto opacity-90 animate__animated animate__fadeInUp">草原、火山、沙漠，尽享北国风光与蒙元文化，一次旅行，多重体验！</p>
+        </div>
+    </header>
+
+    <div class="swiper-container w-full h-[500px] mb-16 shadow-xl relative overflow-hidden">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('img/主页轮播/1.png');">
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                    <h2 class="text-white text-4xl font-bold text-center drop-shadow-lg">驰骋辽阔草原</h2>
+                </div>
+            </div>
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('img/主页轮播/4.png');">
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                    <h2 class="text-white text-4xl font-bold text-center drop-shadow-lg">建筑之美</h2>
+                </div>
+            </div>
+            <div class="swiper-slide bg-cover bg-center" style="background-image: url('img/主页轮播/5.png');">
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                    <h2 class="text-white text-4xl font-bold text-center drop-shadow-lg">体验响沙湾沙漠</h2>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div>
+    </div>
+
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-gray-100 package-card-hover" data-aos="fade-up" data-aos-duration="1000">
+                <img class="w-full h-60 object-cover" src="img/乌兰哈达火山/1.png" alt="火山风光">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">呼和浩特深度游 - 五天四晚</h2>
+                    <p class="text-gray-600 mb-6">此套餐适合时间有限，但又想充分体验呼和浩特经典风光的旅行者。行程紧凑而精彩，涵盖火山、草原、沙漠精华。</p>
+                    
+                    <div class="flex justify-center bg-gray-100 rounded-full p-1 mb-6 shadow-inner">
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200 active" data-package="package1" data-car="business">商务车</button>
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200" data-package="package1" data-car="offroad">越野车</button>
+                    </div>
+
+                    <div class="car-details" data-package="package1" data-car="business">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 商务舒适出行，适合家庭/小团</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 精华景点一网打尽</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 城市文化与自然风光结合</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-red-500 text-3xl font-bold">¥ 4160元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_54.html" class="block w-full text-center py-3 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+
+                    <div class="car-details hidden" data-package="package1" data-car="offroad">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 越野车深度游览，自由探索</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 户外乐趣，更适合探险者</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 灵活行程，尽享驾驶乐趣</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-amber-500 text-3xl font-bold">¥ 5660元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_54.html" class="block w-full text-center py-3 px-6 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-gray-100 package-card-hover" data-aos="fade-up" data-aos-duration="1200">
+                <img class="w-full h-60 object-cover" src="img/辉腾锡勒草原/1.png" alt="辉腾锡勒草原">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">呼和浩特深度游 - 六天五晚</h2>
+                    <p class="text-gray-600 mb-6">经典的草原火山沙漠之旅，时间适中，既能深入体验，又不至于过于疲惫。感受蒙元文化，品尝地道美食。</p>
+                    
+                    <div class="flex justify-center bg-gray-100 rounded-full p-1 mb-6 shadow-inner">
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200 active" data-package="package2" data-car="business">商务车</button>
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200" data-package="package2" data-car="offroad">越野车</button>
+                    </div>
+
+                    <div class="car-details" data-package="package2" data-car="business">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 全程舒适商务，体验升级</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 经典路线，行程丰富</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 深度感受塞外魅力</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-red-500 text-3xl font-bold">¥ 6320元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_65.html" class="block w-full text-center py-3 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+
+                    <div class="car-details hidden" data-package="package2" data-car="offroad">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 越野探险，深入草原腹地</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 沙漠越野，刺激体验</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 更自由，更个性化行程</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-amber-500 text-3xl font-bold">¥ 7120元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_65.html" class="block w-full text-center py-3 px-6 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-gray-100 package-card-hover" data-aos="fade-up" data-aos-duration="1400">
+                <img class="w-full h-60 object-cover" src="img/银肯塔拉沙漠/1.png" alt="响沙湾沙漠">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">呼和浩特深度游 - 七天六晚</h2>
+                    <p class="text-gray-600 mb-6">充裕的时间让您深度领略内蒙古的壮丽风光与多元文化，行程更悠闲，体验更全面。</p>
+                    
+                    <div class="flex justify-center bg-gray-100 rounded-full p-1 mb-6 shadow-inner">
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200 active" data-package="package3" data-car="business">商务车</button>
+                        <button class="car-select-btn flex-1 py-2 px-4 rounded-full text-sm font-medium transition-all duration-200" data-package="package3" data-car="offroad">越野车</button>
+                    </div>
+
+                    <div class="car-details" data-package="package3" data-car="business">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 舒适商务全程随行，尊享服务</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 深度体验，不赶时间</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 全面感受内蒙古独特魅力</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-red-500 text-3xl font-bold">¥ 8020元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_76.html" class="block w-full text-center py-3 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+
+                    <div class="car-details hidden" data-package="package3" data-car="offroad">
+                        <ul class="text-gray-700 space-y-2 mb-6">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 越野探险，尽览私藏美景</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 高自由度，适合资深玩家</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 更深入的自然文化探索</li>
+                        </ul>
+                        <div class="flex justify-between items-end mb-6">
+                            <span class="text-gray-500 text-lg">参考价格：</span>
+                            <span class="text-amber-500 text-3xl font-bold">¥ 9020元 <small class="text-xl">/人</small></span>
+                        </div>
+                        <a href="detail_76.html" class="block w-full text-center py-3 px-6 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition duration-300 font-semibold shadow-md">查看详情</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <footer class="bg-gray-100 text-gray-700 py-8 text-center mt-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-6">
+                <div class="contact-info flex items-center gap-2">
+                    <span class="text-lg font-semibold">联系电话：</span>
+                    <a href="tel:+8612345678900" class="text-blue-600 hover:underline text-xl font-medium">+86 1234 567 8900</a>
+                </div>
+                <div class="wechat-contact">
+                    <p class="text-lg font-semibold mb-2">微信扫码咨询：</p>
+                    <img src="https://via.placeholder.com/120x120?text=微信二维码" alt="微信客服二维码">
+                    <p class="text-sm text-gray-500">（添加微信获取专属客服服务）</p>
+                </div>
+            </div>
+            <p class="mt-8">&copy; 2025 您的旅行公司. 版权所有.</p> </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, // Whether animation should happen only once - while scrolling down
+            duration: 800, // values from 0 to 3000, with step 50ms
+        });
+    </script>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carSelectButtons = document.querySelectorAll('.car-select-btn');
+
+            carSelectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const packageName = this.dataset.package;
+                    const carType = this.dataset.car;
+
+                    // Deactivate all buttons for this package
+                    document.querySelectorAll(`.car-select-btn[data-package="${packageName}"]`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Hide all details for this package
+                    document.querySelectorAll(`.car-details[data-package="${packageName}"]`).forEach(details => {
+                        details.classList.add('hidden');
+                    });
+
+                    // Activate the clicked button
+                    this.classList.add('active');
+
+                    // Show the relevant car details
+                    document.querySelector(`.car-details[data-package="${packageName}"][data-car="${carType}"]`).classList.remove('hidden');
+                });
+            });
+
+            // Initialize the default active state for each package (商务车 active)
+            document.querySelectorAll('.car-select-btn[data-car="business"]').forEach(button => {
+                button.click(); // Simulate click to set initial state
+            });
+        });
+    </script>
+</body>
+</html>

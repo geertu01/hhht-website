@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>呼和浩特5天4晚</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc; /* Tailwind gray-50 */
+            color: #333;
+            line-height: 1.8;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 960px; /* 稍微扩大容器宽度 */
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 16px; /* 更圆润的边角 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* 更深邃的阴影 */
+            overflow: hidden;
+        }
+
+        /* 顶部概述区 */
+        .package-overview {
+            padding: 40px 50px; /* 增加内边距 */
+            text-align: center;
+            background-color: #e0f2f7; /* Tailwind light blue-100 */
+            border-bottom: 1px solid #d1edf5;
+        }
+
+        .package-overview h1 {
+            color: #0694a1; /* Tailwind cyan-700, 更沉稳的青色 */
+            font-size: 2.8em; /* 标题更大 */
+            margin-bottom: 18px;
+            font-weight: 800; /* 更粗的字体 */
+            letter-spacing: -0.02em; /* 字间距微调 */
+        }
+
+        .package-overview .meta-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px; /* 间距更大 */
+            margin-bottom: 25px;
+            font-size: 1.2em;
+            color: #4a5568; /* Tailwind gray-700 */
+            font-weight: 500;
+        }
+
+        .package-overview .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* 图标与文字间距 */
+        }
+
+        .package-overview p {
+            font-size: 1.15em;
+            color: #526379; /* 更深的灰蓝色 */
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .content-section {
+            padding: 40px 50px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 2.4em; /* 更大的标题 */
+            margin-top: 0;
+            margin-bottom: 35px; /* 更多空间 */
+            border-left: 6px solid #06b6d4; /* Tailwind cyan-500，更粗的边线 */
+            padding-left: 20px;
+            font-weight: 700;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 20px;
+            width: 80px;
+            height: 3px;
+            background-color: #10b981; /* Tailwind green-600 下划线效果 */
+        }
+
+        /* 每日行程 - 新设计 */
+        .daily-itinerary .day-item {
+            margin-bottom: 50px; /* 更大的间距 */
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08); /* 更明显的阴影 */
+            overflow: hidden; /* 确保内容在圆角内 */
+        }
+
+        .daily-itinerary .day-content-wrapper {
+            display: flex;
+            flex-direction: row; /* 默认图片在左 */
+            align-items: stretch; /* 确保左右等高 */
+            background-color: #fcfdfe; /* 略带一点蓝的背景 */
+        }
+
+        .daily-itinerary .day-item.reverse .day-content-wrapper {
+            flex-direction: row-reverse; /* 图片在右 */
+        }
+
+        /* 轮播容器 - 主要景点和第一天自由活动景点 */
+        .carousel-container {
+            flex: 1; /* 占据一半宽度 */
+            /* 调整 min-height 以确保图片有足够空间 */
+            min-height: 480px; /* 保持大屏幕下高度 */
+            position: relative;
+            overflow: hidden; /* 隐藏超出部分 */
+            border-radius: 0;
+            background-color: #f0f0f0; /* 占位符背景 */
+            /* 新增: 确保图片内容能够完整显示 */
+            display: block; /* 确保块级显示 */
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 100%; /* 填充父容器高度 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out; /* 平滑过渡 */
+            background-size: cover;
+            background-position: center; /* 确保图片居中显示，不会因为裁剪而丢失主体 */
+            display: flex; /* 用于内部文字定位 */
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        /* 仅用于JS控制的当前活跃slide */
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* 景点文字悬浮效果 */
+        .carousel-slide .overlay-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)); /* 底部渐变 */
+            padding: 20px;
+            opacity: 0; /* 默认隐藏 */
+            transform: translateY(100%); /* 默认在底部外面 */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            font-size: 1.2em;
+            line-height: 1.5;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            z-index: 2; /* 确保在图片上 */
+        }
+        /* 当鼠标悬停在整个carousel-container时，显示active slide上的overlay-text */
+        .carousel-container:hover .carousel-slide.active .overlay-text {
+            opacity: 1; /* 悬停时显示 */
+            transform: translateY(0); /* 向上滑动显示 */
+        }
+        .carousel-slide .overlay-text h4 {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .carousel-slide .overlay-text p {
+            font-size: 0.9em;
+            margin: 0;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* 轮播控制按钮 */
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            z-index: 3; /* 确保在 overlay-text 之上 */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            opacity: 0.7;
+        }
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 1;
+        }
+        .carousel-control.prev {
+            left: 10px;
+        }
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        /* 轮播指示点 */
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
+
+        .day-text-content {
+            flex: 1; /* 占据一半宽度 */
+            padding: 35px 40px; /* 增大内边距 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中内容 */
+        }
+
+        .day-title {
+            color: #0d9488; /* Tailwind teal-600 */
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .activity-list li {
+            margin-bottom: 12px; /* 更多行间距 */
+            color: #4a5568;
+            list-style: none; /* 移除默认圆点 */
+            position: relative;
+            padding-left: 25px; /* 为自定义图标留空间 */
+        }
+        .activity-list li::before {
+            content: '✔️'; /* 自定义圆点 */
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #10b981; /* 绿色勾 */
+            font-size: 0.9em;
+        }
+
+        .activity-list li strong {
+            color: #2d3748; /* 更深的颜色 */
+        }
+
+        /* 美食画廊 - 轮播样式 */
+        .food-gallery-carousel {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            overflow-x: scroll; /* 允许水平滚动 */
+            scroll-snap-type: x mandatory; /* 强制吸附 */
+            -webkit-overflow-scrolling: touch; /* iOS 平滑滚动 */
+            display: flex; /* 使内部元素并排显示 */
+            gap: 20px; /* 图片间距 */
+            padding-bottom: 15px; /* 防止滚动条遮挡 */
+        }
+
+        .food-gallery-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+        .food-gallery-carousel::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0; /* 滚动条颜色 */
+            border-radius: 4px;
+        }
+        .food-gallery-carousel::-webkit-scrollbar-track {
+            background-color: #f1f5f9; /* 滚动条背景 */
+        }
+
+        .food-item {
+            flex-shrink: 0; /* 防止图片缩小 */
+            width: 300px; /* 固定宽度 */
+            height: 250px; /* 固定高度 */
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            scroll-snap-align: start; /* 滚动吸附到开始位置 */
+        }
+        .food-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .food-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .food-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 美食标题 */
+        .food-item .food-title-fixed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            color: white;
+            padding: 8px 15px;
+            font-weight: 600;
+            font-size: 1.1em;
+            border-bottom-right-radius: 8px;
+            z-index: 1; /* 确保在图片上 */
+        }
+
+        /* 美食描述浮层 */
+        .food-item .food-description-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+            color: white;
+            padding: 15px;
+            font-size: 0.95em;
+            line-height: 1.4;
+            opacity: 0; /* 默认隐藏 */
+            transform: translateY(100%); /* 默认在底部外面 */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            z-index: 1; /* 确保在图片上 */
+        }
+        .food-item:hover .food-description-overlay {
+            opacity: 1; /* 悬停时显示 */
+            transform: translateY(0); /* 向上滑动显示 */
+        }
+
+        /* 费用说明 */
+        .cost-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cost-details ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .cost-details ul li.included::before {
+            content: '✅';
+            margin-right: 10px;
+        }
+
+        .cost-details ul li.excluded::before {
+            content: '❌';
+            margin-right: 10px;
+        }
+
+        /* 车型费用展示区 (沿用上次的优秀设计，稍作样式微调) */
+        .car-fee-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px; /* 间距更大 */
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .car-fee-box {
+            background-color: #fcfcfc;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px; /* 更圆润 */
+            padding: 30px; /* 增大内边距 */
+            flex: 1 1 45%;
+            min-width: 320px; /* 最小宽度 */
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08); /* 更明显阴影 */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .car-fee-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .car-fee-box h3 {
+            font-size: 2em; /* 更大的标题 */
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #10b981;
+        }
+        .car-fee-box.offroad h3 {
+            color: #f59e0b;
+        }
+
+        .car-fee-box .price {
+            font-size: 3.2em; /* 更大的价格 */
+            font-weight: 800;
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+        .car-fee-box .price small {
+            font-size: 0.5em;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .car-fee-box p {
+            font-size: 1.05em; /* 描述文字更大 */
+            color: #666;
+            margin-bottom: 25px;
+            min-height: 80px; /* 确保高度一致 */
+            line-height: 1.6;
+        }
+
+        .car-fee-box ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .car-fee-box ul li {
+            font-size: 0.95em;
+            color: #555;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .car-fee-box ul li svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            color: #22c55e;
+        }
+
+        /* 温馨提示 (沿用上次设计，稍作样式微调) */
+        .tips-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-section ul li {
+            margin-bottom: 12px;
+            color: #555;
+            position: relative;
+            padding-left: 30px; /* 为图标留更多空间 */
+        }
+
+        .tips-section ul li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #f59e0b;
+            font-size: 1.2em; /* 增大图标 */
+        }
+
+        .call-to-action {
+            text-align: center;
+            padding: 50px; /* 增大内边距 */
+            background-color: #ecfeff;
+            border-radius: 0 0 16px 16px; /* 匹配容器圆角 */
+        }
+
+        .call-to-action .action-button {
+            display: inline-block;
+            padding: 18px 45px; /* 增大按钮尺寸 */
+            background-color: #06b6d4;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px; /* 更圆润的按钮 */
+            font-size: 1.3em;
+            font-weight: 700; /* 更粗的字体 */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* 更明显阴影 */
+        }
+
+        .call-to-action .action-button:hover {
+            background-color: #0891b2;
+            transform: translateY(-5px); /* 悬停上浮更多 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 992px) { /* 针对平板尺寸调整 */
+            .container {
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+            .package-overview, .content-section, .call-to-action {
+                padding: 30px 35px;
+            }
+            .package-overview h1 {
+                font-size: 2.2em;
+            }
+            .package-overview .meta-info {
+                gap: 15px;
+                font-size: 1em;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .daily-itinerary .day-content-wrapper {
+                flex-direction: column; /* 在小屏幕上垂直堆叠 */
+            }
+            .daily-itinerary .day-item.reverse .day-content-wrapper {
+                flex-direction: column; /* 同样垂直堆叠 */
+            }
+            .carousel-container {
+                min-height: 280px; /* 适当调低，但在手机上再做更多调整 */
+            }
+            .daily-itinerary .day-text-content {
+                padding: 30px;
+            }
+            .daily-itinerary .day-title {
+                font-size: 1.8em;
+            }
+            .food-gallery-carousel {
+                scroll-snap-type: x mandatory; /* 强制吸附 */
+                overflow-x: scroll; /* 允许水平滚动 */
+            }
+            .food-item {
+                width: 280px; /* 调整宽度 */
+                height: 220px;
+            }
+            .car-fee-box {
+                flex: 1 1 100%;
+                min-width: unset;
+            }
+            .call-to-action .action-button {
+                font-size: 1.1em;
+                padding: 15px 30px;
+            }
+        }
+
+        @media (max-width: 768px) { /* 针对手机尺寸调整 */
+            .package-overview, .content-section, .call-to-action {
+                padding: 20px 25px;
+            }
+            .package-overview h1 {
+                font-size: 1.8em;
+            }
+            .package-overview .meta-info {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 0.9em;
+            }
+            .section-title {
+                font-size: 1.6em;
+                margin-bottom: 25px;
+                padding-left: 15px;
+                border-left-width: 4px;
+            }
+            .section-title::after {
+                bottom: -10px;
+                left: 15px;
+                width: 60px;
+            }
+            .carousel-container {
+                /* 在移动端进一步降低最小高度，以避免图片过高导致页面内容被推下太多 */
+                min-height: 220px; /* 手机端最小高度 */
+            }
+            .daily-itinerary .day-text-content {
+                padding: 25px;
+            }
+            .daily-itinerary .day-title {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+            .daily-itinerary .activity-list li {
+                font-size: 0.9em;
+                padding-left: 20px;
+            }
+            .food-item {
+                width: 250px; /* 调整宽度 */
+                height: 200px;
+            }
+            .car-fee-box {
+                padding: 25px;
+            }
+            .car-fee-box h3 {
+                font-size: 1.6em;
+            }
+            .car-fee-box .price {
+                font-size: 2.5em;
+            }
+            .tips-section ul li {
+                font-size: 0.9em;
+                padding-left: 25px;
+            }
+            .tips-section ul li::before {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <section class="package-overview">
+        <h1>【套餐名称：呼和浩特深度游 - 5天4晚】</h1>
+        <div class="meta-info">
+            <span><i style="font-style: normal;">📅</i> 5天4晚</span>
+            <span><i style="font-style: normal;">👥</i> 私家小团</span>
+            <span><i style="font-style: normal;">✨</i> 深度体验</span>
+        </div>
+        <p>此套餐专为追求*舒适与深度体验*的家庭或小团设计，让您轻松畅游草原、火山、沙漠，尽享呼和浩特的地道风情。我们精心策划，确保您的旅程既有震撼的自然风光，也有深厚的文化沉浸。</p>
+    </section>
+
+    <section class="content-section daily-itinerary">
+        <h2 class="section-title">每日行程</h2>
+
+        <div class="day-item">
+            <div class="day-content-wrapper">
+                <div class="carousel-container" id="day1-attraction-carousel">
+                    <div class="carousel-slide active" style="background-image: url('img/大昭寺/2.jpg');">
+                        <div class="overlay-text">
+                            <h4>大召寺</h4>
+                            <p>呼和浩特最著名的寺庙，藏传佛教圣地，感受庄严与宁静。大召寺（门票35元）
+                                地址：玉泉区大召前街大召无量寺   电话：0471-6306166  营业时间：08:00~18:00</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide active" style="background-image: url('img/大昭寺/3.jpg');">
+                        <div class="overlay-text">
+                            <h4>大召寺</h4>
+                            <p>呼和浩特最著名的寺庙，藏传佛教圣地，感受庄严与宁静。大召寺（门票35元）
+                                地址：玉泉区大召前街大召无量寺   电话：0471-6306166  营业时间：08:00~18:00</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide active" style="background-image: url('img/大昭寺/4.jpg');">
+                        <div class="overlay-text">
+                            <h4>大召寺</h4>
+                            <p>呼和浩特最著名的寺庙，藏传佛教圣地，感受庄严与宁静。
+                                地址：玉泉区大召前街大召无量寺 门票35元  电话：0471-6306166  营业时间：08:00~18:00</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide active" style="background-image: url('img/宝尔汗佛塔.png');">
+                        <div class="overlay-text">
+                            <h4>宝尔汗佛塔</h4>
+                            <p>位于内蒙古自治区呼和浩特市玉泉公园内，鄂尔多斯大街与大南街十字路口（即南茶坊）西约300米马路南侧，建于2006年5月26日</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/席力图召/1.png');">
+                        <div class="overlay-text">
+                            <h4>席力图召</h4>
+                            <p>明清建筑风格，体验老呼市的市井文化和历史韵味。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/将军衙署.jpg');">
+                        <div class="overlay-text">
+                            <h4>将军衙署</h4>
+                            <p>清代乾隆二年（1737年），将军衙署始建，先后共有79任绥远城将军驻守于此，是了解清朝边塞军事制度的重要窗口。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/清•和硕恪靖公主府.jpg');">
+                        <div class="overlay-text">
+                            <h4>清•和硕恪靖公主府</h4>
+                            <p>和硕恪靖公主府，位于内蒙古自治区呼和浩特市新城区新城区通道北路62号。公主府建于清康熙三十六年至四十五年间（1697~1706年），是清康熙帝第六女和硕恪靖公主（雍正元年晋封固伦恪靖公主）下嫁喀尔喀蒙古土谢图亲王敦多布多尔济后居住过的府邸。</p>
+                        </div>
+                    </div>
+                    <button class="carousel-control prev">&#10094;</button>
+                    <button class="carousel-control next">&#10095;</button>
+                    <div class="carousel-dots"></div>
+                </div>
+                <div class="day-text-content">
+                    <h3 class="day-title">第一天：呼和浩特接机，自由活动</h3>
+                    <ul class="activity-list">
+                        <li>根据您的航班抵达时间，专车司机将在机场/火车站温馨接机，送您前往市中心酒店办理入住。</li>
+                        <li>自由活动，推荐前往呼和浩特市区品尝当地美食，或参观推荐景点。</li>
+                        <li><strong>推荐景点：</strong>大召寺、宝尔汗佛塔、席力图召、将军衙署、清•和硕恪靖公主府</li>
+                        <li><strong>推荐餐厅：</strong>半亩地莜面大王、道北杂碎、格日勒阿妈奶茶馆、老绥远烧麦、额尔敦涮肉、泽成冰煮羊</li>
+                        <li><strong>推荐商业区：</strong>万达广场、海亮广场、摩尔城</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="food-gallery-carousel" id="food-carousel">
+                <div class="food-item">
+                    <img src="img/food/莜面.jpg" alt="半亩地莜面大王">
+                    <div class="food-title-fixed">半亩地莜面大王</div>
+                    <div class="food-description-overlay">
+                        莜面口感筋道，风味独特，菜品丰富多样，尽显农家特色。
+                        地址：赛罕区新华东街57号万达广场对面向西50米路北（广播电视大学对面）
+                        电话：0471-4662286
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="img/food/羊杂.png" alt="道北杂碎">
+                    <div class="food-title-fixed">道北杂碎</div>
+                    <div class="food-description-overlay">
+                        地道的呼和浩特早餐，汤浓味美，暖胃又暖心。
+                        地址：哲里木路军区第四干休所综合楼1号楼1至2层17号
+                        电话：15904883318
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="img/food/格日勒阿妈奶茶馆.jpg" alt="格日勒阿妈奶茶馆">
+                    <div class="food-title-fixed">格日勒阿妈奶茶馆</div>
+                    <div class="food-description-overlay">
+                        老字号蒙古族餐厅，提供地道的蒙古族美食和文化体验。
+                        地址：玉泉区塞上老街大召景区办旁
+                        电话：0471-3902961
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="img/food/烧卖.png" alt="老绥远烧麦">
+                    <div class="food-title-fixed">老绥远烧麦</div>
+                    <div class="food-description-overlay">
+                        皮薄馅大，汁多味美，呼市必尝的传统名点，回味无穷。
+                        地址：回民区文化宫街明珠广场一层（中蒙医院门诊部斜对面）
+                        电话：0471-3246721
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="img/food/额尔顿刷肉.png" alt="额尔敦涮肉">
+                    <div class="food-title-fixed">额尔敦涮肉</div>
+                    <div class="food-description-overlay">
+                        被呼和浩特当地人誉为最好吃的传统涮羊肉。
+                        地址：回民区中山西路海亮金宝街入口阿迪达斯南行30米
+                        电话：0471-5299299/400-006-3338
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="img/food/冰煮羊.png" alt="泽成冰煮羊">
+                    <div class="food-title-fixed">泽成冰煮羊</div>
+                    <div class="food-description-overlay">
+                        用冰块煮制羊肉，锁住肉汁原味，口感鲜嫩，别具一格的吃法。
+                        地址：新城区护城河南街南口北京酒吧往北50米
+                        电话：0471-4308780
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-item reverse">
+            <div class="day-content-wrapper">
+                <div class="carousel-container" id="day2-attraction-carousel">
+                    <div class="carousel-slide" style="background-image: url('img/乌兰哈达火山/1.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/乌兰哈达火山/2.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/乌兰哈达火山/3.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/乌兰哈达火山/4.png');"></div>
+                    <button class="carousel-control prev">&#10094;</button>
+                    <button class="carousel-control next">&#10095;</button>
+                    <div class="carousel-dots"></div>
+                </div>
+                <div class="day-text-content">
+                    <h3 class="day-title">第二天：乌兰哈达火山群 - 住辉腾锡勒草原</h3>
+                    <p style="text-indent: 2em">
+                        内蒙古乌兰哈达火山地质公园位于乌兰察布市察右后旗境内，该火山群形成于地质历史的第四纪晚期，最后一次喷发距今约一万年，属年轻的休眠状态下的“活火山”。这里集聚着草原火山群、熔岩地貌及堰塞湖景观，被誉为天然的“火山博物馆”。 数万年前，这里发生了惊天动地的火山喷发，沸腾的熔浆，像河流一样奔涌。火山脚下的“石河”“石海”便是十几万年前滚烫岩浆喷涌而出的遗迹。由形态完整的火山锥、蜿蜒的熔岩流、精巧的堰塞湖、无垠的大草原组成的景观群。
+                    </p>
+                    <p style="text-indent: 2em">乌兰哈达火山群经历了第四纪晚更新世和全新世两个地质时期的火山活动。晚更新世火山活动受东北部和西北部地壳裂隙控制，火山熔岩沿裂隙喷出地表。这种喷发称为裂隙喷发。因为这种喷发现在只能在冰岛看到，所以又被称为冰岛火山。全新世，原裂隙型火山活动停止，裂隙带多被熔岩堵塞，火山活动演变为受断裂带控制的中心喷发，这也是数十座火山呈串珠状分布的原因。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-item">
+            <div class="day-content-wrapper">
+                <div class="carousel-container" id="day3-attraction-carousel">
+                    <div class="carousel-slide" style="background-image: url('img/辉腾锡勒草原/1.png');">
+                        <div class="overlay-text">
+                            <h4>辉腾锡勒草原</h4>
+                            <p>辉腾锡勒草原，夏季凉爽，冬季寒冷，平均最高温度仅18℃。每年五月至九月，草原上鲜花盛开，如同进入一片绚丽的花海</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/辉腾锡勒草原/2.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/辉腾锡勒草原/3.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/辉腾锡勒草原/4.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/银肯塔拉沙漠/1.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/银肯塔拉沙漠/2.png');">
+                        <div class="overlay-text">
+                            <h4>银肯塔拉沙漠</h4>
+                            <p>来到银肯塔拉非玩不可的项目就是滑沙了，这里就是银肯塔拉的沙响地带，沙坡的高度为110米，宽为400米，坡度为45度</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/银肯塔拉沙漠/3.png');"></div>
+                    <div class="carousel-slide" style="background-image: url('img/银肯塔拉沙漠/4.png');"></div>
+                    <button class="carousel-control prev">&#10094;</button>
+                    <button class="carousel-control next">&#10095;</button>
+                    <div class="carousel-dots"></div>
+                </div>
+                <div class="day-text-content">
+                    <h3 class="day-title">第三天：辉腾锡勒草原出发—响沙湾。入住达拉特旗</h3>
+                    <ul class="activity-list">
+                        <li style="text-indent: 2em">“辉腾锡勒”是蒙古语，意为“寒冷的高原”。驱车穿行在无边的草原上，两侧绿意盎然，头顶是蓝天白云，远离钢筋水泥的城市，倍感惬意与自由。途中可随时停车拍照、漫步，尽情感受草原的辽阔。</li>
+                        <li style="text-indent: 2em">来到银肯塔拉非玩不可的项目就是滑沙了，这里就是银肯塔拉的沙响地带，沙坡的高度为110米，宽为400米，坡度为45度，地形程月牙形，沙响的声音轻则如青蛙呱呱的叫声，重则像飞机汽车的轰鸣声。这些响声让人啧啧称奇，但至今也没有一个科学的解释，只留下了那些神秘的传说</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-item reverse">
+            <div class="day-content-wrapper">
+                <div class="carousel-container" id="day4-attraction-carousel">
+                    <div class="carousel-slide" style="background-image: url('img/哈素海/1.png');">
+                        <div class="overlay-text">
+                            <h4>哈素海</h4>
+                            <p>水面面积32平方公里，水深2米左右，湖底杂草丛生，水质肥沃，盛产草、鲢、鲤、鲫、团头鲂、武昌鱼等鱼类及河虾蟹</p>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('img/哈素海/2.png');">
+                        <div class="overlay-text">
+                            <h4>哈素海</h4>
+                            <p>湖面芦苇荡内繁衍着各种鸟类，凌空起飞时盘旋在烟波浩渺的湖面上，组成一幅十分壮观的图景。湖内有一座水库和一个渔场，设置游船供游客饱览湖光山色，并可在船上品尝鲜鱼。哈素海度假村依湖而建，设有多种旅游项目和服务设施。</p>
+                        </div>
+                    </div>
+                    <button class="carousel-control prev">&#10094;</button>
+                    <button class="carousel-control next">&#10095;</button>
+                    <div class="carousel-dots"></div>
+                </div>
+                <div class="day-text-content">
+                    <h3 class="day-title">第四天：达拉特旗—哈素海—呼和浩特</h3>
+                    <p style="text-indent: 2em">
+                        哈素海是黄河变迁而遗留的牛轭湖，属大黑河水系的外流淡水湖泊。过去曾称陶思浩西海子，俗称后泊儿。 哈素为蒙古译音。原名哈拉乌素，意为青水湖，由青色湖水得名。蒙古语哈拉乌素海的简称，意为黑水湖，是面积约32平方公里的天然湖泊。距呼和浩特70公里。湖北为大青山，东、南、西三面被农田和牧场所包围。哈素海是天然湖泊，有“塞外西湖”之称
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2 class="section-title">费用详情</h2>
+        <div class="car-fee-section">
+            <div class="car-fee-box business">
+                <h3>商务车套餐费用</h3>
+                <p class="price">¥ 4160元 <small>/人</small></p>
+                <p>选择商务车，享受全程宽敞舒适的旅程，适合家庭出行，为您提供平稳尊贵的用车体验。商务出行，尊享服务，适合对舒适度有较高要求的您。</p>
+                <ul>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 适合家庭、亲友小团</li>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 空间宽敞，乘坐舒适</li>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 行李空间充足，适合长途</li>
+                </ul>
+            </div>
+
+            <div class="car-fee-box offroad">
+                <h3>越野车套餐费用</h3>
+                <p class="price">¥ 5660元 <small>/人</small></p>
+                <p>选择越野车，深入探索草原深处和火山地貌，享受更加灵活和富有趣味性的深度探险。高自由度，体验更原生态的内蒙。</p>
+                <ul>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 适合探险爱好者、年轻人</li>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 适应复杂路况，高通过性</li>
+                    <li><svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 体验更原生态风景</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section cost-details">
+        <h2 class="section-title">费用包含与不包含细则</h2>
+        <h3>费用包含：</h3>
+        <ul>
+            <li class="included">【交通】全程舒适（商务车700元*3天=2100元/越野车900元*3天=2700元），专业司机，安全可靠。含油路司机食宿、接送机。</li>
+            <li class="included">【住宿】4晚*500元/间=2000元 包含一晚特色蒙古包住宿/准四星酒店（含早餐）。</li>
+            <li class="included">【门票+活动】960元*1=960元：黄花沟双索交通票300元+骑马260元+沙漠套票300元+火山100元（全程赠送无人机航拍、送欢迎水果）。</li>
+            <li class="included">【用餐】正餐自理。</li>
+            <!--<li class="included">【保险】旅行社责任险及旅游意外险。</li>-->
+        </ul>
+
+        <h3>费用不包含：</h3>
+        <ul>
+            <li class="excluded">【大交通】往返呼和浩特的大交通费用（机票/火车票）。</li>
+            <li class="excluded">【餐饮】行程中未标注的午餐和晚餐，以及所有个人消费。</li>
+            <li class="excluded">【娱乐】行程中提及的自费娱乐项目（如草原骑马、勒勒车、诈马宴、响沙湾内部娱乐项目等）。</li>
+            <li class="excluded">【其他】因不可抗力因素（如天气、交通管制等）导致的额外费用。</li>
+        </ul>
+    </section>
+
+    <section class="content-section tips-section">
+        <h2 class="section-title">温馨提示与注意事项</h2>
+        <ul>
+            <li>内蒙古地区昼夜温差大，即使夏季也建议携带长袖衣物，注意保暖。</li>
+            <li>紫外线较强，请做好防晒措施（防晒霜、墨镜、帽子等）。</li>
+            <li>草原地区风较大，请注意防风。</li>
+            <li>尊重当地蒙古族风俗习惯。</li>
+            <li>建议穿着舒适的徒步鞋或运动鞋。</li>
+            <li>行程可根据您的实际需求和时间进行微调，请提前与客服沟通。</li>
+            <li>旅行期间请注意个人财物和人身安全。</li>
+        </ul>
+    </section>
+
+    <!--<section class="call-to-action">
+        <a href="#" class="action-button">立即预订 / 咨询详情</a>
+        <p style="margin-top: 25px; color: #4a5568; font-size: 1.1em;">如有任何疑问，欢迎随时联系我们的旅行顾问！</p>
+    </section>-->
+
+    <section class="call-to-action">
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 mb-8">
+            <div class="flex flex-col items-center">
+                <p class="text-xl font-semibold" style="color: #4a5568; margin-bottom: 8px;">电话咨询</p>
+                <a href="tel:+8612345678900" class="text-3xl font-bold" style="color: #06b6d4; text-decoration: none;">
+                    +86 1234 567 8900
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <p class="text-xl font-semibold" style="color: #4a5568; margin-bottom: 8px;">微信扫码咨询</p>
+                <img src="https://via.placeholder.com/150x150?text=微信二维码" alt="微信客服二维码" class="w-36 h-36 border border-gray-300 rounded-lg shadow-md mb-2">
+            </div>
+        </div>
+        <p style="margin-top: 25px; color: #4a5568; font-size: 1.1em;">我们期待为您打造一次难忘的内蒙古之旅！</p>
+    </section>
+</div>
+<a href="index.html" class="fixed bottom-8 right-8 bg-cyan-500 text-white p-4 rounded-full shadow-xl hover:bg-cyan-600 hover:scale-105 transition duration-300 ease-in-out z-50 flex items-center justify-center group">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125h9.75a1.125 1.125 0 001.125-1.125V9.75M8.25 21.75h7.5" />
+    </svg>
+    <span class="absolute right-full mr-4 px-3 py-1 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap hidden md:block">
+            返回主页
+        </span>
+</a>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 景点轮播功能 ---
+        function setupAttractionCarousel(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const slides = container.querySelectorAll('.carousel-slide');
+            const prevBtn = container.querySelector('.carousel-control.prev');
+            const nextBtn = container.querySelector('.carousel-control.next');
+            const dotsContainer = container.querySelector('.carousel-dots');
+
+            let currentSlideIndex = 0;
+            let intervalId;
+            const slideInterval = 5000; // 5秒切换一次
+
+            // 创建指示点
+            // 确保 dotsContainer 存在，如果它没有被添加到 HTML 中，这里可能会报错
+            if (dotsContainer) {
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('carousel-dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        showSlide(index);
+                        resetInterval();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+            const dots = dotsContainer ? dotsContainer.querySelectorAll('.carousel-dot') : [];
+
+
+            function showSlide(index) {
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+
+                slides.forEach((slide, i) => {
+                    if (i === index) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                currentSlideIndex = index;
+            }
+
+            function nextSlide() {
+                showSlide(currentSlideIndex + 1);
+            }
+
+            function prevSlide() {
+                showSlide(currentSlideIndex - 1);
+            }
+
+            function startAutoPlay() {
+                stopAutoPlay(); // 先清除旧的，确保只有一个定时器
+                intervalId = setInterval(nextSlide, slideInterval);
+            }
+
+            function stopAutoPlay() {
+                clearInterval(intervalId);
+            }
+
+            function resetInterval() {
+                stopAutoPlay();
+                startAutoPlay();
+            }
+
+            // 按钮点击事件
+            if (prevBtn) prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetInterval();
+            });
+            if (nextBtn) nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetInterval();
+            });
+
+            // 鼠标悬停暂停/离开恢复
+            container.addEventListener('mouseenter', stopAutoPlay);
+            container.addEventListener('mouseleave', startAutoPlay);
+
+            // 初始化
+            showSlide(currentSlideIndex);
+            startAutoPlay();
+        }
+
+        // 对所有景点轮播容器应用轮播功能
+        setupAttractionCarousel('day1-attraction-carousel');
+        setupAttractionCarousel('day2-attraction-carousel');
+        setupAttractionCarousel('day3-attraction-carousel');
+        setupAttractionCarousel('day4-attraction-carousel');
+        // ... 如果有更多天的行程，继续调用 setupAttractionCarousel('dayX-attraction-carousel');
+
+
+        // --- 美食画廊自动滚动功能 ---
+        function setupFoodCarousel(carouselId) {
+            const carousel = document.getElementById(carouselId);
+            if (!carousel) return;
+
+            let autoScrollIntervalId;
+            const scrollSpeed = 2000; // 每2秒滚动一次
+
+            function autoScroll() {
+                // 获取单个美食项的宽度（包括margin/gap）
+                // 假设所有 food-item 宽度一致，并且 gap 为 20px
+                const firstItem = carousel.querySelector('.food-item');
+                if (!firstItem) return;
+                // 通过 getBoundingClientRect 获取精确宽度，包括可能的padding和border
+                // 注意：这里的 clientWidth 是元素的内部宽度，不包括滚动条和边框
+                // 实际需要加上 gap。为了简化，这里直接用一个估算值，或者获取第一个元素的offsetWidth。
+                const itemWidth = firstItem.offsetWidth + 20; // 300px (food-item width) + 20px (gap)
+
+                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+
+                if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - (itemWidth / 2)) {
+                    // 如果接近或到达末尾，则滚动回开头
+                    carousel.scrollTo({
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // 否则，滚动到下一个美食项
+                    carousel.scrollBy({
+                        left: itemWidth, // 滚动一个美食项的距离
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            function startAutoScroll() {
+                stopAutoScroll(); // 清除旧的
+                autoScrollIntervalId = setInterval(autoScroll, scrollSpeed);
+            }
+
+            function stopAutoScroll() {
+                clearInterval(autoScrollIntervalId);
+            }
+
+            // 鼠标悬停暂停/离开恢复
+            carousel.addEventListener('mouseenter', stopAutoScroll);
+            carousel.addEventListener('mouseleave', startAutoScroll);
+
+            // 初始化自动滚动
+            startAutoScroll();
+        }
+
+        setupFoodCarousel('food-carousel');
+    });
+</script>
+</body>
+</html>
